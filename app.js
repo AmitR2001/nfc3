@@ -26,11 +26,8 @@ document.getElementById('writeButton').addEventListener('click', async () => {
     if ('NDEFReader' in window) {
         try {
             const ndef = new NDEFReader();
-            await ndef.write(message).then(() => {
-                document.getElementById('message').textContent = 'Message written.';
-            }).catch(error => {
-                document.getElementById('message').textContent = `Write failed :-( try again: ${error}.`;
-            });
+            await ndef.write(message);
+            document.getElementById('message').textContent = 'Message written.';
         } catch (error) {
             document.getElementById('message').textContent = `Error: ${error}`;
         }
