@@ -1,56 +1,96 @@
-document.getElementById('writeButton').addEventListener('click', async () => {
-    const fullName = document.getElementById('full_name').value;
-    const age = document.getElementById('age').value;
-    const gender = document.getElementById('gender').value;
-    const bloodType = document.getElementById('blood_type').value;
-    const allergies = document.getElementById('allergies').value;
-    const chronicConditions = document.getElementById('chronic_conditions').value;
-    const currentMedications = document.getElementById('current_medications').value;
-    const emergencyContact = document.getElementById('emergency_contact').value;
-    const immunizationRecords = document.getElementById('immunization_records').value;
-
-    const message = `
-        Basic Patient Information
-        FullName: ${fullName}
-        Age: ${age}
-        Gender: ${gender}
-        BloodType: ${bloodType}
-
-        Allergies: ${allergies}
-        Chronic Conditions: ${chronicConditions}
-        Current Medications: ${currentMedications}
-        Emergency Contact: ${emergencyContact}
-        Immunization Records: ${immunizationRecords}
-    `;
-
-    if ('NDEFReader' in window) {
-        try {
-            const ndef = new NDEFReader();
-            await ndef.write(message);
-            document.getElementById('message').textContent = 'Message written.';
-        } catch (error) {
-            document.getElementById('message').textContent = `Error: ${error}`;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NFC Writer/Reader</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: auto;
         }
-    } else {
-        document.getElementById('message').textContent = 'Web NFC is not supported on this device.';
-    }
-});
-
-document.getElementById('readButton').addEventListener('click', async () => {
-    if ('NDEFReader' in window) {
-        try {
-            const ndef = new NDEFReader();
-            await ndef.scan();
-            ndef.onreading = event => {
-                const decoder = new TextDecoder();
-                for (const record of event.message.records) {
-                    document.getElementById('message').textContent = `NFC Tag contains: ${decoder.decode(record.data)}`;
-                }
-            };
-        } catch (error) {
-            document.getElementById('message').textContent = `Error: ${error}`;
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
         }
-    } else {
-        document.getElementById('message').textContent = 'Web NFC is not supported on this device.';
-    }
-});
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        p {
+            text-align: center;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>NFC Writer/Reader</h1>
+        <h2>Basic Patient Information</h2>
+        <label for="full_name">Full Name:</label>
+        <input type="text" id="full_name" name="full_name" required>
+
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required>
+
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender" required>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+        </select>
+
+        <label for="blood_type">Blood Type:</label>
+        <input type="text" id="blood_type" name="blood_type" required>
+
+        <label for="allergies">Allergies:</label>
+        <input type="text" id="allergies" name="allergies">
+
+        <label for="chronic_conditions">Chronic Conditions:</label>
+        <input type="text" id="chronic_conditions" name="chronic_conditions">
+
+        <label for="current_medications">Current Medications:</label>
+        <input type="text" id="current_medications" name="current_medications">
+
+        <label for="emergency_contact">Emergency Contact:</label>
+        <input type="text" id="emergency_contact" name="emergency_contact" required>
+
+        <label for="immunization_records">Immunization Records:</label>
+        <input type="text" id="immunization_records" name="immunization_records">
+
+        <button id="writeButton">Write to NFC Tag</button>
+        <button id="readButton">Read from NFC Tag</button>
+        <p id="message"></p>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
