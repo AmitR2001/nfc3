@@ -1,15 +1,13 @@
-
 document.getElementById('writeButton').addEventListener('click', async () => {
-    const fullName = document.getElementById('fullName').value;
+    const fullName = document.getElementById('full_name').value;
     const age = document.getElementById('age').value;
     const gender = document.getElementById('gender').value;
-    const bloodType = document.getElementById('bloodType').value;
-    const drugAllergies = document.getElementById('drugAllergies').value;
-    const foodAllergies = document.getElementById('foodAllergies').value;
-    const environmentalAllergies = document.getElementById('environmentalAllergies').value;
-    const diabetes = document.getElementById('diabetes').value;
-    const hypertension = document.getElementById('hypertension').value;
-    const asthma = document.getElementById('asthma').value;
+    const bloodType = document.getElementById('blood_type').value;
+    const allergies = document.getElementById('allergies').value;
+    const chronicConditions = document.getElementById('chronic_conditions').value;
+    const currentMedications = document.getElementById('current_medications').value;
+    const emergencyContact = document.getElementById('emergency_contact').value;
+    const immunizationRecords = document.getElementById('immunization_records').value;
 
     const message = `
         Basic Patient Information
@@ -18,15 +16,11 @@ document.getElementById('writeButton').addEventListener('click', async () => {
         Gender: ${gender}
         BloodType: ${bloodType}
 
-        Allergies
-        Drug: ${drugAllergies}
-        Food: ${foodAllergies}
-        Environmental: ${environmentalAllergies}
-
-        Chronic Conditions
-        Diabetes: ${diabetes}
-        Hypertension: ${hypertension}
-        Asthma: ${asthma}
+        Allergies: ${allergies}
+        Chronic Conditions: ${chronicConditions}
+        Current Medications: ${currentMedications}
+        Emergency Contact: ${emergencyContact}
+        Immunization Records: ${immunizationRecords}
     `;
 
     if ('NDEFReader' in window) {
